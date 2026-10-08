@@ -24,7 +24,7 @@
     "audit:fix:tui": "npm audit fix --workspace ui-tui",
     "check": "npm run --ws check",
     "fix": "npm run --ws fix",
-    "prepare": "node -e \"const {existsSync}=require('fs');const {spawnSync}=require('child_process');if(existsSync('.git'))process.exit(spawnSync('lefthook',['install'],{stdio:'inherit',shell:true}).status??1)\""
+    "prepare": "node -e \"const{existsSync:e}=require('fs'),{spawnSync:s}=require('child_process');if(!e('.git'))process.exit(0);try{if(String((s('git',['config','--get','core.hooksPath'],{encoding:'utf8',stdio:'pipe'}).stdout||'')).trim()){console.log('prepare: custom core.hooksPath set, skipping lefthook install');process.exit(0)}}catch{};const r=s('lefthook',['install'],{stdio:'inherit',shell:true});if((r.status??1)!==0)console.warn('prepare: lefthook install failed, continuing without git hooks')\""
   },
   "repository": {
     "type": "git",
