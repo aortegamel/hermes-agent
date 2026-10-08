@@ -1102,6 +1102,54 @@
   }
 }
 
+/* Pure-CSS edge fade for scrollers: a mask whose top/bottom stops are driven by
+   the element's own scroll position (scroll-driven animations, Chromium 115+).
+   Each edge only fades while content is clipped behind it. The base value is 0
+   so a list that fits (inactive timeline = no animation) is never dimmed.
+   Registered as <length> so the keyframes can interpolate them. */
+@property --scroll-fade-top {
+  syntax: '<length>';
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --scroll-fade-bottom {
+  syntax: '<length>';
+  initial-value: 0px;
+  inherits: false;
+}
+
+@keyframes scroll-fade-top {
+  to {
+    --scroll-fade-top: var(--scroll-fade-size);
+  }
+}
+
+@keyframes scroll-fade-bottom {
+  from {
+    --scroll-fade-bottom: var(--scroll-fade-size);
+  }
+}
+
+@utility scroll-fade-y {
+  --scroll-fade-size: 1.5rem;
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--scroll-fade-top),
+    #000 calc(100% - var(--scroll-fade-bottom)),
+    transparent
+  );
+  animation:
+    scroll-fade-top linear both,
+    scroll-fade-bottom linear both;
+  animation-timeline: scroll(self y), scroll(self y);
+  animation-range:
+    0 var(--scroll-fade-size),
+    calc(100% - var(--scroll-fade-size)) 100%;
+}
+
 /* The guided-onboarding thread is marked with [data-thread-type='onboarding']
    — the hook for onboarding-only transcript styling. */
 

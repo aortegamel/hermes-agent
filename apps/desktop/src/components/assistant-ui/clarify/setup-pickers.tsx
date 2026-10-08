@@ -159,7 +159,7 @@ function ChipPicker({
       {rows.length > SEARCH_THRESHOLD ? (
         <SearchField onChange={setQuery} placeholder={t.assistant.setupChoose.findApp} value={query} />
       ) : null}
-      <div className="grid max-h-72 grid-cols-3 gap-2 overflow-y-auto p-1" role="group">
+      <div className="scroll-fade-y grid max-h-72 grid-cols-3 gap-2 overflow-y-auto p-1" role="group">
         {rows.map((row, index) =>
           search && !row.label.toLowerCase().includes(search) ? null : (
             <PickerItem active={cursor === index} className="rounded-[6px]" key={row.id}>
